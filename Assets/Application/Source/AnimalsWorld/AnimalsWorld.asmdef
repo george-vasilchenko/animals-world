@@ -1,0 +1,11 @@
+{
+    "name": "AnimalsWorld",
+    "references": [
+        "Generic",
+        "External"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

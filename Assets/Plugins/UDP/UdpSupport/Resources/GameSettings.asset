@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 106071959, guid: ccf859ce3c0bf4ffba1073a67995b3b7, type: 3}
+  m_Name: GameSettings
+  m_EditorClassIdentifier: 
+  UnityProjectID: 21e77b38-4cff-44d4-ae0d-04dd329820e8
+  UnityClientID: P6TnC2C7PFmHgGgjW17Ibg
+  UnityClientKey: 0fETcXoWkKjQRua0N3QyPb-3G7uYUBD5IxxaViaCplg
+  UnityClientRSAPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvhmbnZd6oC6+1Pf/AQ4F7VUOjaYF8B4XO1NayWihXQUPOB9Qn1MpOtLCO2Xs9QEgouMEAj2L1FNDzjKtRtPwF7yPRn0zLsUoFHkC/TfHc2GndQkN2BdUSWUZJd1XTDzYh0SVIGV9BNAIS6ufEvLwuZ2uXPwqL19C8+sQIiVWkMqtvrKV0odJ45pW9FQu2WsIuwJ5+CDEnCX7S25M4ue221Ad7eiYMM7VOuKr9LxPIOCmEPkIVndrPuNwDYNUgyNP4kzNR3jv9SL/oijEF1VA17sOieQYocgOzw0A39TOQMt2z36SNgZI3yKQzgQg9Hu1BjelJqULQvqlxZBApPkA2QIDAQAB
+  AppName: 21e77b38-4cff-44d4-ae0d-04dd329820e8
+  AppSlug: 07e697ad-2375-4762-8c81-8051c18b86d7
+  AppItemId: 274878239471
+  Permission: owner

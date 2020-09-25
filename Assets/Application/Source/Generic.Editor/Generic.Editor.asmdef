@@ -1,0 +1,17 @@
+{
+    "name": "Generic.Editor",
+    "references": [
+        "Generic"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [
+        "Android",
+        "iOS"
+    ],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}

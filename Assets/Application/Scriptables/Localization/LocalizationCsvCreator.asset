@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe1a4556759aa0f48b6f89c0ec50aa24, type: 3}
+  m_Name: LocalizationCsvCreator
+  m_EditorClassIdentifier: 
+  LocalizationCollection:
+    Columns:
+    - Title: Keys
+      Entries:
+      - k_parent_calc_format
+      - k_parent_answer
+      - k_iap_unlocked
+      - k_parent_ok
+      - k_parent_bad
+      - k_settings_title
+      - k_purch_no_purch
+      - k_settings_music
+      - k_purch_existing_purch_pend
+      - k_purch_prod_unavailable
+      - k_purch_sign_inv
+      - k_purch_usr_cancel
+      - k_purch_payment_decl
+      - k_purch_dup_trans
+      - k_purch_unknown
+      - k_iap_confirm
+      - k_purch_already_done
+      - k_iap_restore_confirm
+      - k_purch_unlock
+      - k_purch_restore
+      - k_purch_panel
+      - k_purch_error
+    - Title: English
+      Entries:
+      - What is the result of {0} + {1}?
+      - 'Answer:'
+      - All puzzles are unlocked! Enjoy the game!
+      - You are a parent, thank you!
+      - Ask your parents to unlock the puzzles!
+      - Settings
+      - Purchasing is not available because there was no connection to internet. Please
+        close the game, make sure you have connection to internet and start the game.
+      - Music
+      - Existing purchase is already pending.
+      - The requested product is not available.
+      - The provided signature is not valid.
+      - User has cancelled the purchase.
+      - Payment has been declined.
+      - Duplicate transaction has been detected.
+      - The failure reason is unknown.
+      - Are you sure you want to open all puzzles? Please restart the game after the
+        purchase.
+      - You have already unlocked the puzzles. Have you restarted the game?
+      - Are you sure you want restore the purchases? Please restart the game after
+        the purchase.
+      - Unlock levels
+      - Restore purchases
+      - Purchasing
+      - Purchases are not working. Unknown error occurred.
+    - Title: Dutch
+      Entries:
+      - Wat is het resultaat van {0} + {1}?
+      - 'Antwoord:'
+      - Alle puzzels zijn ontgrendeld! Geniet van het spel!
+      - Je bent een ouder, dank je!
+      - Vraag je ouders om de puzzles te ontgrendelen!
+      - Instellingen
+      - Inkoop is niet beschikbaar omdat er geen verbinding met internet was. Sluit
+        het spel, zorg dat je verbinding hebt met internet en start het spel.
+      - Muziek
+      - Bestaande aankoop is al in behandeling.
+      - Het gevraagde product is niet beschikbaar.
+      - De verstrekte handtekening is niet geldig.
+      - Gebruiker heeft de aankoop geannuleerd.
+      - De betaling is geweigerd.
+      - Dubbele transactie is gedetecteerd.
+      - De reden voor het falen is onbekend.
+      - Weet je zeker dat je alle puzzles wilt openen? Start het spel opnieuw na de
+        aankoop.
+      - Je hebt de puzzels al ontgrendeld. Heb je het spel opnieuw gestart?
+      - Weet je zeker dat je de aankopen wilt herstellen? Start het spel opnieuw na
+        de aankoop.
+      - Levels ontgrendelen
+      - Aankopen herstellen
+      - Aankopen
+      - Aankopen werken niet. Er is een onbekende fout opgetreden.

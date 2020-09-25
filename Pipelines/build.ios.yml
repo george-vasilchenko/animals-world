@@ -1,0 +1,138 @@
+trigger:
+- master-ios
+
+name: $(Date:yyMMdd)$(rev:rrr)
+
+variables:
+  DOCKER_IMAGE_NAME: $(dockerImage.name)
+  DOCKER_NETWORK_NAME: vsts_network
+  DOCKER_CONTAINER_NAME: unitybuild
+  DOCKER_CONTAINER_HOST_NAME: unitybuild
+
+  AGENT_ROOT: '/root/azuredevops/agent'
+  PROJECT_ROOT: '/root/azuredevops/agent/src'
+  BUILD_OUTPUT_PATH: '/root/azuredevops/agent/src/Builds'
+  ARTIFACTS_STAGING_PATH: '/root/azuredevops/agent/staging'
+
+  UNITY_USERNAME: $(unityAccount.username)
+  UNITY_PASSWORD: $(unityAccount.password)
+  UNITY_SERIAL: $(unityAccount.serial)
+  TEST_PLATFORM: linux
+
+  PROJECT_NAME: AnimalsWorld
+  ARTIFACT_NAME: animals-world
+
+  BUNDLE_ID: com.malenkiyapps.animalsworld
+  BUNDLE_VERSION: 0.0.$(Build.BuildNumber)
+  BUNDLE_VERSION_CODE: $(Build.BuildNumber)
+
+jobs:
+  - job: buildUnityProject
+    displayName: Build Unity Project
+    pool: Malenkiy
+    timeoutInMinutes: 40
+    steps:      
+      # Set up container
+      - bash: |
+          set -e
+          set -x
+          CNT_ALL=$(docker ps -q -all)
+          if [ -z "$CNT_ALL" ]; then echo "No containers are running, nothing to stop"; else echo "Stopping containers" && docker stop $CNT_ALL; fi
+          if [ -z "$CNT_ALL" ]; then echo "No containers are running, nothing to remove"; else echo "Removing containers" && docker rm $CNT_ALL; fi
+          docker network prune --force
+          docker container prune --force
+          docker pull $DOCKER_IMAGE_NAME
+          docker network create $DOCKER_NETWORK_NAME
+          docker run \
+            -t \
+            -d \
+            --name $DOCKER_CONTAINER_NAME \
+            --network $DOCKER_NETWORK_NAME \
+            --hostname $DOCKER_CONTAINER_HOST_NAME \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            -v '$(Build.SourcesDirectory)':$PROJECT_ROOT \
+            -v '$(Build.ArtifactStagingDirectory)':$ARTIFACTS_STAGING_PATH \
+            -v '$(Agent.TempDirectory)':'/root/azuredevops/agent/temp' \
+            -v '$(Agent.ToolsDirectory)':'/root/azuredevops/agent/tools' \
+            -v '$(Agent.RootDirectory)/_tasks':'/root/azuredevops/tasks' \
+            -v '$(Agent.HomeDirectory)':'/root/azuredevops/agent/externals':ro \
+            $DOCKER_IMAGE_NAME
+        displayName: Initialize container
+        name: containerInit
+
+        # Build Unity
+      - bash: |
+          set -e
+          set -x
+          docker exec $DOCKER_CONTAINER_NAME echo "Building Unity project"
+          docker exec $DOCKER_CONTAINER_NAME bash -c "rm -rf $BUILD_OUTPUT_PATH"
+          docker exec $DOCKER_CONTAINER_NAME xvfb-run --auto-servernum --server-args='-screen 0 640x480x24' \
+             /opt/Unity/Editor/Unity \
+             -quit \
+             -batchmode \
+             -nographics \
+             -serial $UNITY_SERIAL \
+             -username $UNITY_USERNAME \
+             -password $UNITY_PASSWORD \
+             -projectPath $PROJECT_ROOT \
+             -executeMethod MalenkiyApps.BuildControllerEditor.BuildAndroidProjectExtended \
+             -logFile \
+             -scenes "Assets/Application/Scenes/Logo.unity,Assets/Application/Scenes/Preload.unity,Assets/Application/Scenes/Main.unity" \
+             -development "0" \
+             -applicationIdentifier $BUNDLE_ID \
+             -productName $PROJECT_NAME \
+             -companyName "Malenkiy Apps" \
+             -buildOutputLocation $BUILD_OUTPUT_PATH \
+             -bundleVersion $BUNDLE_VERSION \
+             -bundleVersionCode $BUNDLE_VERSION_CODE \
+             -keyAliasName "malenkiyapps" \
+             -keyAliasPass $(keyAlias.password) \
+             -keyStoreName $PROJECT_ROOT/Keystore/malenkiyapps.keystore \
+             -keyStorePass $(keyStore.password) \
+             -targetSdkVersion "0" \
+             -minSdkVersion "21"
+        displayName: Build Unity3D project
+        name: projectBuild
+
+        # Build Gradle
+      - bash: |
+          set -e
+          set -x
+          docker exec $DOCKER_CONTAINER_NAME echo "Building Gradle project"
+          docker exec $DOCKER_CONTAINER_NAME echo -c "JAVA_OPTS=-Xmx1024M"
+          docker exec $DOCKER_CONTAINER_NAME bash -c "cd $BUILD_OUTPUT_PATH/$PROJECT_NAME && gradle wrapper"
+          docker exec $DOCKER_CONTAINER_NAME bash -c "cd $BUILD_OUTPUT_PATH/$PROJECT_NAME && $BUILD_OUTPUT_PATH/$PROJECT_NAME/gradlew assembleRelease"
+        displayName: Build Gradle Project
+        name: gradleBuild
+
+        # Copy to staging
+      - bash: |
+          set -e
+          set -x
+          docker exec $DOCKER_CONTAINER_NAME echo "Copying build package to staging directory"
+          docker exec $DOCKER_CONTAINER_NAME bash -c "cd $BUILD_OUTPUT_PATH/$PROJECT_NAME/build/outputs/apk/release/ && cp *.apk $ARTIFACTS_STAGING_PATH"
+        displayName: Copy to Staging
+        name: copyToStaging
+
+        # Publish artifact
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact"
+        inputs:
+          artifactName: $(ARTIFACT_NAME)
+
+        # Stop container
+      - bash: |
+          set -e
+          set -x
+          CNT_ALL=$(docker ps -q -all)
+          if [ -z "$CNT_ALL" ]; then echo "No containers are running, nothing to stop"; else echo "Stopping containers" && docker stop $CNT_ALL; fi
+          if [ -z "$CNT_ALL" ]; then echo "No containers are running, nothing to remove"; else echo "Removing containers" && docker rm $CNT_ALL; fi
+          docker network prune --force
+          docker container prune --force
+        displayName: Stop and remove container
+        condition: always()
+
+      # Clean agent directories
+      - task: mspremier.PostBuildCleanup.PostBuildCleanup-task.PostBuildCleanup@3
+        displayName: 'Clean Agent Directories'
+        condition: always()

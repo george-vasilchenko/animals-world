@@ -1,0 +1,136 @@
+trigger:
+- master
+
+name: $(Date:yyMMdd)$(rev:rrr)
+
+variables:
+  # Docker 
+  DOCKER_IMAGE_NAME: 'georgevasilchenko/unitybuild:18.3.11-1'
+  DOCKER_NETWORK_NAME: vsts_network
+  DOCKER_CONTAINER_NAME: unitybuild
+  DOCKER_CONTAINER_HOST_NAME: unitybuild
+
+  # Agent
+  AGENT_ROOT: '/root/azuredevops/agent'
+  ARTIFACTS_STAGING_PATH: '/root/azuredevops/agent/staging'
+  PROJECT_NAME: AnimalsWorld
+  ARTIFACT_NAME: animals-world
+
+  # Main
+  UNITY_MAIN_USERNAME: 'george.vasilchenko@hotmail.com'
+  UNITY_MAIN_PASSWORD: 'Sebbo1473!'
+  UNITY_MAIN_LICENSE_SERIAL: 'SC-MMZJ-25HB-ZR3P-6ZDM-3RHT'
+  BUILD_MAIN_PROJECT_DIR: '/root/azuredevops/agent/src'
+  BUILD_MAIN_METHOD_SIGNATURE: 'MalenkiyApps.BuildControllerEditor.BuildIOSProject'
+  BUILD_MAIN_LOG_PATH: ''
+
+  # Common
+  BUILD_COM_SCENES: 'Assets/Application/Scenes/Logo.unity,Assets/Application/Scenes/Preload.unity,Assets/Application/Scenes/Main.unity'
+  BUILD_COM_IS_DEVELOPMENT: '0'
+  BUILD_COM_APP_ID: 'com.malenkiyapps.animalsworld'
+  BUILD_COM_PRODUCT_NAME: 'AnimalsWorld'
+  BUILD_COM_COMPANY_NAME: 'Malenkiy Apps'
+  BUILD_COM_OUTPUT_DIR: '/root/azuredevops/agent/src/Builds'
+  BUILD_COM_BUNDLE_VERSION: '1.0.$(Build.BuildNumber)'
+
+  # IOS
+  BUILD_IOS_BUILD_NUMBER: '$(Build.BuildNumber)'
+  BUILD_IOS_TARGET_OS_VERSION: '9.0'
+  BUILD_IOS_TEAM_ID: 'CJAKYUHAAL'
+
+jobs:
+  - job: buildUnityProject
+    displayName: Build Unity Project
+    pool: Malenkiy
+    timeoutInMinutes: 40
+    steps:      
+      # Set up container
+      - bash: |
+          set -e
+          set -x
+          CNT_ALL=$(docker ps -q -all)
+          if [ -z "$CNT_ALL" ]; then echo "No containers are running, nothing to stop"; else echo "Stopping containers" && docker stop $CNT_ALL; fi
+          if [ -z "$CNT_ALL" ]; then echo "No containers are running, nothing to remove"; else echo "Removing containers" && docker rm $CNT_ALL; fi
+          docker network prune --force
+          docker container prune --force
+          docker pull $DOCKER_IMAGE_NAME
+          docker network create $DOCKER_NETWORK_NAME
+          docker run \
+            -t \
+            -d \
+            --name $DOCKER_CONTAINER_NAME \
+            --network $DOCKER_NETWORK_NAME \
+            --hostname $DOCKER_CONTAINER_HOST_NAME \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            -v '$(Build.SourcesDirectory)':$BUILD_MAIN_PROJECT_DIR \
+            -v '$(Build.ArtifactStagingDirectory)':$ARTIFACTS_STAGING_PATH \
+            -v '$(Agent.TempDirectory)':'/root/azuredevops/agent/temp' \
+            -v '$(Agent.ToolsDirectory)':'/root/azuredevops/agent/tools' \
+            -v '$(Agent.RootDirectory)/_tasks':'/root/azuredevops/tasks' \
+            -v '$(Agent.HomeDirectory)':'/root/azuredevops/agent/externals':ro \
+            $DOCKER_IMAGE_NAME
+        displayName: Initialize container
+        name: containerInit
+
+        # Build Unity
+      - bash: |
+          set -e
+          set -x
+          docker exec $DOCKER_CONTAINER_NAME echo "Building Unity project"
+          docker exec $DOCKER_CONTAINER_NAME bash -c "rm -rf $BUILD_COM_OUTPUT_DIR"
+          docker exec $DOCKER_CONTAINER_NAME xvfb-run --auto-servernum --server-args='-screen 0 640x480x24' \
+             /opt/Unity/Editor/Unity \
+             -quit \
+             -batchmode \
+             -nographics \
+             -serial $UNITY_MAIN_LICENSE_SERIAL \
+             -username $UNITY_MAIN_USERNAME \
+             -password $UNITY_MAIN_PASSWORD \
+             -projectPath $BUILD_MAIN_PROJECT_DIR \
+             -executeMethod $BUILD_MAIN_METHOD_SIGNATURE \
+             -logFile \
+             -scenes $BUILD_COM_SCENES \
+             -development $BUILD_COM_IS_DEVELOPMENT \
+             -applicationIdentifier $BUILD_COM_APP_ID \
+             -productName $BUILD_COM_PRODUCT_NAME \
+             -companyName $BUILD_COM_COMPANY_NAME \
+             -buildOutputLocation $BUILD_COM_OUTPUT_DIR \
+             -bundleVersion $BUNDLE_VERSION \
+             -buildNumber $BUILD_IOS_BUILD_NUMBER \
+             -targetOSVersionString $BUILD_IOS_TARGET_OS_VERSION \
+             -appleDeveloperTeamID $BUILD_IOS_TEAM_ID
+
+        displayName: Build Unity3D project
+        name: projectBuild
+
+        # Copy to staging
+      #- bash: |
+      #    set -e
+      #    set -x
+      #    docker exec $DOCKER_CONTAINER_NAME echo "Copying build package to staging directory"
+      #    docker exec $DOCKER_CONTAINER_NAME bash -c "cd $BUILD_COM_OUTPUT_DIR/$PROJECT_NAME/build/outputs/apk/release/ && cp *.apk $ARTIFACTS_STAGING_PATH"
+      #  displayName: Copy to Staging
+      #  name: copyToStaging
+
+        # Publish artifact
+      #- task: PublishBuildArtifacts@1
+      #  displayName: "Publish Artifact"
+      #  inputs:
+      #    artifactName: $(ARTIFACT_NAME)
+
+        # Stop container
+      - bash: |
+          set -e
+          set -x
+          CNT_ALL=$(docker ps -q -all)
+          if [ -z "$CNT_ALL" ]; then echo "No containers are running, nothing to stop"; else echo "Stopping containers" && docker stop $CNT_ALL; fi
+          if [ -z "$CNT_ALL" ]; then echo "No containers are running, nothing to remove"; else echo "Removing containers" && docker rm $CNT_ALL; fi
+          docker network prune --force
+          docker container prune --force
+        displayName: Stop and remove container
+        condition: always()
+
+      # Clean agent directories
+      - task: mspremier.PostBuildCleanup.PostBuildCleanup-task.PostBuildCleanup@3
+        displayName: 'Clean Agent Directories'
+        condition: always()

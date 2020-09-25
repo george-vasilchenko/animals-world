@@ -1,0 +1,23 @@
+Keys;English;Dutch
+k_parent_calc_format;What is the result of {0} + {1}?;Wat is het resultaat van {0} + {1}?
+k_parent_answer;Answer:;Antwoord:
+k_iap_unlocked;All puzzles are unlocked! Enjoy the game!;Alle puzzels zijn ontgrendeld! Geniet van het spel!
+k_parent_ok;You are a parent, thank you!;Je bent een ouder, dank je!
+k_parent_bad;Ask your parents to unlock the puzzles!;Vraag je ouders om de puzzles te ontgrendelen!
+k_settings_title;Settings;Instellingen
+k_purch_no_purch;Purchasing is not available because there was no connection to internet. Please close the game, make sure you have connection to internet and start the game.;Inkoop is niet beschikbaar omdat er geen verbinding met internet was. Sluit het spel, zorg dat je verbinding hebt met internet en start het spel.
+k_settings_music;Music;Muziek
+k_purch_existing_purch_pend;Existing purchase is already pending.;Bestaande aankoop is al in behandeling.
+k_purch_prod_unavailable;The requested product is not available.;Het gevraagde product is niet beschikbaar.
+k_purch_sign_inv;The provided signature is not valid.;De verstrekte handtekening is niet geldig.
+k_purch_usr_cancel;User has cancelled the purchase.;Gebruiker heeft de aankoop geannuleerd.
+k_purch_payment_decl;Payment has been declined.;De betaling is geweigerd.
+k_purch_dup_trans;Duplicate transaction has been detected.;Dubbele transactie is gedetecteerd.
+k_purch_unknown;The failure reason is unknown.;De reden voor het falen is onbekend.
+k_iap_confirm;Are you sure you want to open all puzzles? Please restart the game after the purchase.;Weet je zeker dat je alle puzzles wilt openen? Start het spel opnieuw na de aankoop.
+k_purch_already_done;You have already unlocked the puzzles. Have you restarted the game?;Je hebt de puzzels al ontgrendeld. Heb je het spel opnieuw gestart?
+k_iap_restore_confirm;Are you sure you want restore the purchases? Please restart the game after the purchase.;Weet je zeker dat je de aankopen wilt herstellen? Start het spel opnieuw na de aankoop.
+k_purch_unlock;Unlock levels;Levels ontgrendelen
+k_purch_restore;Restore purchases;Aankopen herstellen
+k_purch_panel;Purchasing;Aankopen
+k_purch_error;Purchases are not working. Unknown error occurred.;Aankopen werken niet. Er is een onbekende fout opgetreden.

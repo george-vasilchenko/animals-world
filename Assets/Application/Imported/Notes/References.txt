@@ -1,0 +1,18 @@
+Level:{
+	Frame:{
+		anchor: middle-right
+		x: -388
+		y: 0
+		z: 0
+		w: 0
+		h: 0
+	}
+	Figures:{
+		anchor: middle-left
+		x: 128
+		y: 0
+		z: 0
+		w: 0
+		h: 0
+	}
+}

@@ -1,0 +1,24 @@
+﻿// This file is used by Code Analysis to maintain SuppressMessage attributes that are applied to this
+// project. Project-level suppressions either have no target or are given a specific target and
+// scoped to a namespace, type, member, etc.
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>", Scope = "member", Target = "~M:MalenkiyApps.LocalizationCsvHandler.CreateOrUpdateCsvFromLocalizationCollection(MalenkiyApps.LocalizationCollection,System.String,System.Char)")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "initialized from editor", Scope = "member", Target = "~F:AnimalsWorld.ScrollController._scrollItemsCollection")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "initialized from editor", Scope = "member", Target = "~F:AnimalsWorld.ScrollController._scrollTrigger")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "initialized from editor", Scope = "member", Target = "~F:AnimalsWorld.ScrollController._scrollTriggers")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "initialized from editor", Scope = "member", Target = "~F:AnimalsWorld.ScrollController._swipeHandler")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "initialized from editor", Scope = "member", Target = "~F:AnimalsWorld.SwipeHandler._uiRaycaster")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "initialized from editor", Scope = "member", Target = "~F:AnimalsWorld.ScrollItemScaler._scrollController")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "initialized from editor", Scope = "member", Target = "~F:AnimalsWorld.ScrollItemScaler._scrollItemsCollection")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "initialized from editor", Scope = "member", Target = "~F:AnimalsWorld.ItemPositionBasedScrollTrigger._scrollController")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "initialized from editor", Scope = "member", Target = "~F:AnimalsWorld.ItemPositionBasedScrollTrigger._scrollItemsCollection")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "initialized from editor", Scope = "member", Target = "~F:AnimalsWorld.ItemPositionBasedScrollTrigger._swipeHandler")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "initialized from editor", Scope = "member", Target = "~F:AnimalsWorld.ScrollItemSelector._scrollController")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "initialized from editor", Scope = "member", Target = "~F:AnimalsWorld.ScrollItemSelector._scrollItemsCollection")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "initialized from editor", Scope = "member", Target = "~F:AnimalsWorld.ScrollItemSelector._swipeHandler")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "initialized from editor", Scope = "member", Target = "~F:AnimalsWorld.StepperBasedScrollTrigger._scrollController")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "initialized from editor", Scope = "member", Target = "~F:AnimalsWorld.StepperBasedScrollTrigger._scrollItemsCollection")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "initialized from editor", Scope = "member", Target = "~F:AnimalsWorld.SwipeDistanceBasedScrollTrigger._scrollItemsCollection")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "initialized from editor", Scope = "member", Target = "~F:AnimalsWorld.SwipeDistanceBasedScrollTrigger._swipeHandler")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "initialized from editor", Scope = "member", Target = "~F:AnimalsWorld.SwipeInput._swipeDistanceLimitForClick")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "initialized from editor", Scope = "member", Target = "~F:AnimalsWorld.SwipeScrollController._swipeInput")]

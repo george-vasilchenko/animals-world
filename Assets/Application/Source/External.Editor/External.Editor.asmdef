@@ -1,0 +1,17 @@
+{
+    "name": "External.Editor",
+    "references": [
+        "External"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [
+        "Android",
+        "iOS"
+    ],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}
